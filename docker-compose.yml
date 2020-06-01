@@ -5,9 +5,13 @@ services:
     image: 4c0n/adb:latest
     build:
       context: .
+    volumes:
+      - ./adb:/root/.android
     network: host
     devices:
       - /dev/bus/usb:/dev/bus/usb
+    ports:
+      - 5037:5037
 
   rethinkdb:
     image: rethinkdb:2.4
@@ -25,3 +29,4 @@ services:
     ports:
       - 7100:7100
       - 7110:7110
+      - 7400:7400
