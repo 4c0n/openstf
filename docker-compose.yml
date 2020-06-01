@@ -19,5 +19,9 @@ services:
     image: openstf/stf:v3.4.2
     command: stf local
     depends_on:
+      - adb
       - rethinkdb
     network: host
+    ports:
+      - 7100:7100
+      - 7110:7110
