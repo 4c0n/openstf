@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  adb:
+    image: 4c0n/adb:latest
+    build:
+      context: .
+    network: host
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+
+  rethinkdb:
+    image: rethinkdb:2.4
+    volumes:
+      - ./data:/data:rw
+    network: host
+
+  openstf:
+    image: openstf/stf:v3.4.2
+    command: stf local
+    depends_on:
+      - rethinkdb
+    network: host
