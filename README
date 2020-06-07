@@ -1,0 +1,8 @@
+1. Power on phone
+2. Once phone is booted, connect phone to usb
+3. podman-compose up -d
+4. http://localhost:7100
+5. First time only: Copy the contents of "adb/adbkey.pub" to the clipboard and save it in the settings under keys.
+   This will make the phone stop asking for debug permissions.
+
+The devices section in docker-compose.yml lists /dev/bus/usb. However, it is not updated during container runtime, as that is not supported by the docker "--device" option it translates to.
