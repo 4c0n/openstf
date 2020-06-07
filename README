@@ -1,8 +1,28 @@
+Running openstf (Open Smartphone Test Farm), in order to be able to remotely control Android devices that are
+connected over usb, in a browser.
+
+Specifically devices without a (working) screen attached.
+
+Installation:
+1. $ git submodule update --init --recursive
+2. $ podman-compose build
+3. $ podman-compose up -d
+   On first start:
+    - rethinkdb will create a directory for its data: "data/rethinkdb_data"
+    - adb will generate keys: "adb/adbkey" and "adb/adbkey.pub"
+4. Open in browser: http://localhost:7100
+5. Authenticate with username "administrator" and email "administrator@fakedomain.com"
+6. Navigate to the settings and add the contents of "adb/adbkey/pub" as a new key
+   This will make the device stop asking if you want to trust the computer with debugging permissions.
+7. $ podman-compose down
+
+Usage:
 1. Power on phone
 2. Once phone is booted, connect phone to usb
-3. podman-compose up -d
-4. http://localhost:7100
-5. First time only: Copy the contents of "adb/adbkey.pub" to the clipboard and save it in the settings under keys.
-   This will make the phone stop asking for debug permissions.
+3. $ podman-compose up -d
+    - stf will install the apk (built using the STFService.apk repository) at this point
+4. Open in browser: http://localhost:7100
 
-The devices section in docker-compose.yml lists /dev/bus/usb. However, it is not updated during container runtime, as that is not supported by the docker "--device" option it translates to.
+The devices section in docker-compose.yml lists /dev/bus/usb. However, it is not updated during container
+runtime, as that is not supported by the docker "--device" option it translates to. So it is very important
+to connect a fully booted device to usb before starting stf.
