@@ -1,0 +1,3 @@
+[submodule "build/stf"]
+	path = build/stf
+	url = git@github.com:4c0n/stf.git
