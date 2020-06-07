@@ -23,6 +23,16 @@ Usage:
     - stf will install the apk (built using the STFService.apk repository) at this point
 4. Open in browser: http://localhost:7100
 
+Troubleshooting:
 The devices section in docker-compose.yml lists /dev/bus/usb. However, it is not updated during container
 runtime, as that is not supported by the docker "--device" option it translates to. So it is very important
 to connect a fully booted device to usb before starting stf.
+
+When starting openstf checks if the apk is already installed and does not update it, if it is installed.
+To uninstall it, use the following command:
+
+$ podman run --network host --rm 4c0n/adb:latest adb -H127.0.0.1 -P5037 uninstall jp.co.cyberagent.stf
+
+Checking if the adb server has picked up on the device:
+
+$ podman run --network host --rm 4c0n/adb:latest adb -H127.0.0.1 -P5037 devices
