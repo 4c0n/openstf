@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  adb:
+    image: 4c0n/adb:latest
+    build:
+      context: .
+    volumes:
+      - ./adb:/root/.android
+    network: host
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+    ports:
+      - 5037:5037

@@ -31,8 +31,8 @@ to connect a fully booted device to usb before starting stf.
 When starting openstf checks if the apk is already installed and does not update it, if it is installed.
 To uninstall it, use the following command:
 
-$ podman run --network host --rm 4c0n/adb:latest adb -H127.0.0.1 -P5037 uninstall jp.co.cyberagent.stf
+$ podman exec openstf_adb_1 adb uninstall jp.co.cyberagent.stf
 
 Checking if the adb server has picked up on the device:
 
-$ podman run --network host --rm 4c0n/adb:latest adb -H127.0.0.1 -P5037 devices
+$ podman exec openstf_adb_1 adb devices

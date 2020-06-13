@@ -4,4 +4,8 @@ RUN set -eux; \
     apt update; \
     apt install -yqq adb android-sdk-platform-tools-common
 
-CMD adb -a server nodaemon
+COPY ./adb-entrypoint.sh ./adb-entrypoint.sh
+RUN chmod +x ./adb-entrypoint.sh
+
+ENTRYPOINT ["./adb-entrypoint.sh"]
+CMD ["adb", "logcat"]
