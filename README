@@ -36,3 +36,8 @@ $ podman exec openstf_adb_1 adb uninstall jp.co.cyberagent.stf
 Checking if the adb server has picked up on the device:
 
 $ podman exec openstf_adb_1 adb devices
+
+Just using adb:
+
+$ podman-compose -f docker-compose.adb.yml up -d
+$ podman exec -it openstf_adb_1 bash
