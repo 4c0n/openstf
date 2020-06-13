@@ -5,8 +5,8 @@ Specifically devices without a (working) screen attached.
 
 Installation:
 1. $ git submodule update --init --recursive
-2. $ podman-compose build
-3. $ podman-compose up -d
+2. $ ./build.sh
+3. $ ./adb-up.sh && ./stf-up.sh
    On first start:
     - rethinkdb will create a directory for its data: "data/rethinkdb_data"
     - adb will generate keys: "adb/adbkey" and "adb/adbkey.pub"
@@ -14,30 +14,31 @@ Installation:
 5. Authenticate with username "administrator" and email "administrator@fakedomain.com"
 6. Navigate to the settings and add the contents of "adb/adbkey/pub" as a new key
    This will make the device stop asking if you want to trust the computer with debugging permissions.
-7. $ podman-compose down
+7. $ ./stf-down.sh; ./adb-down.sh
 
 Usage:
 1. Power on phone
 2. Once phone is booted, connect phone to usb
-3. $ podman-compose up -d
+3. $ ./adb-up.sh && ./stf-up.sh
     - stf will install the apk (built using the STFService.apk repository) at this point
 4. Open in browser: http://localhost:7100
+5. Shutting down:
+   $ ./stf-down.sh && ./adb-down.sh
 
 Troubleshooting:
-The devices section in docker-compose.yml lists /dev/bus/usb. However, it is not updated during container
+The devices section in docker-compose.adb.yml lists /dev/bus/usb. However, it is not updated during container
 runtime, as that is not supported by the docker "--device" option it translates to. So it is very important
 to connect a fully booted device to usb before starting stf.
 
 When starting openstf checks if the apk is already installed and does not update it, if it is installed.
 To uninstall it, use the following command:
 
-$ podman exec openstf_adb_1 adb uninstall jp.co.cyberagent.stf
+$ ./adb-command.sh adb uninstall jp.co.cyberagent.stf
 
 Checking if the adb server has picked up on the device:
 
-$ podman exec openstf_adb_1 adb devices
+$ ./adb-command.sh adb devices
 
 Just using adb:
 
-$ podman-compose -f docker-compose.adb.yml up -d
-$ podman exec -it openstf_adb_1 bash
+$ ./adb-up.sh && ./adb-command.sh bash
